@@ -1,0 +1,41 @@
+# Default Guardrails Policy Configuration
+# Place this file at repository root as .guardrails.yml or guardrails-config.yml
+
+enforcement_mode: warning  # advisory, warning, or blocking
+
+security:
+  enabled: true
+  block_on_critical: true
+  block_on_high: false
+  rules:
+    - SEC-001  # Hardcoded secrets
+    - SEC-002  # SQL injection
+    - SEC-003  # Insecure deserialization
+    - SEC-004  # Unsafe execution (eval, exec)
+    - SEC-005  # Weak cryptography
+
+compliance:
+  enabled: true
+  block_on_violation: false
+  allowed_licenses:
+    - MIT
+    - Apache-2.0
+    - Apache-2.0-only
+    - GPL-3.0
+    - GPL-3.0-only
+    - BSD-3-Clause
+    - ISC
+
+quality:
+  enabled: false
+  rules: []
+
+copilot:
+  # Stricter rules for Copilot-generated code
+  stricter_enforcement: true
+  flag_generated_code: true
+
+# Custom message appended to PR comments
+custom_message: |
+  Please review the flagged issues and either fix them or mark them as reviewed.
+  For questions about these rules, contact your security team.
