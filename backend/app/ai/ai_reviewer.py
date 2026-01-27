@@ -2,26 +2,23 @@
 
 import os
 from typing import List, Optional, Dict, Tuple
-import google.genai as genai
+from google import genai
+from google.genai import types
 from app.models import Violation, SeverityLevel
 
 
 class AIReviewer:
-    """AI-assisted code review engine using Google Gemini."""
+    """AI-assisted code review engine using Google Gemini (Gen AI SDK v1)."""
 
     def __init__(self):
-        """Initialize Gemini AI reviewer."""
+        """Initialize Google Gen AI Client."""
         self.api_key = os.getenv("GOOGLE_API_KEY")
         self.use_ai = self.api_key is not None
         
         if self.use_ai:
-            genai.configure(api_key=self.api_key)
-            # Using 1.5-flash for speed/cost, or 1.5-pro for deeper reasoning
-            self.model_name = "gemini-1.5-flash" 
-            self.model = genai.GenerativeModel(
-                model_name=self.model_name,
-                system_instruction="You are a security expert reviewing code for vulnerabilities."
-            )
+            # Initialize the Client (replaces genai.configure)
+            self.client = genai.Client(api_key=self.api_key)
+            self.model_name = "gemini-1.5-flash"
 
     def suggest_fix(self, violation: Violation) -> Tuple[str, str]:
         """
@@ -60,26 +57,33 @@ EXPLANATION:
 BEST_PRACTICES:
 [practices here]
 """
-            # Gemini generation config
-            generation_config = genai.types.GenerationConfig(
+            # Configuration for the generation (includes system instructions)
+            config = types.GenerateContentConfig(
                 temperature=0.3,
                 max_output_tokens=1000,
+                system_instruction="You are a security expert reviewing code for vulnerabilities."
             )
 
-            response = self.model.generate_content(
-                prompt, 
-                generation_config=generation_config
+            # Call the model via the client
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=config
             )
             
+            # Access text directly from the response object
             return self._parse_ai_response(response.text)
 
         except Exception as e:
-            # Fall back to rule-based approach on error (e.g., Safety filters or API limits)
-            print(f"Gemini Error: {e}")
+            # Fall back to rule-based approach on error
+            print(f"Gemini Error for {violation.rule_id}: {e}")
             return self._rule_based_suggest_fix(violation)
 
     def _parse_ai_response(self, response_text: str) -> Tuple[str, str]:
         """Parse Gemini response into components."""
+        if not response_text:
+            return "", "AI generation returned empty response."
+
         suggested_code = ""
         explanation = ""
 
@@ -121,7 +125,10 @@ Code Context:
 Is this violation a false positive? Could it be a legitimate use case?
 Provide your analysis in 2-3 sentences.
 """
-            response = self.model.generate_content(prompt)
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt
+            )
             return response.text.strip()
         except Exception:
             return ""
@@ -154,71 +161,23 @@ Provide your analysis in 2-3 sentences.
                 "Incomplete AI-generated code can cause runtime errors. Always implement full logic.",
             ),
             "IP-001": (
-                "# Properly attribute source code\n# Source: https://github.com/owner/repo\n# License: MIT",
+                "# Properly attribute source code\n# Source: [https://github.com/owner/repo](https://github.com/owner/repo)\n# License: MIT",
                 "Always include proper attribution and verify license compatibility when using external code.",
             ),
         }
 
-        return fixes.get(violation.rule_id, ("# Review code", violation.message))
-
-    def analyze_context(
-        self,
-        violation: Violation,
-        surrounding_code: str
-    ) -> Optional[str]:
-        """
-        Analyze the context of a violation using AI.
-        Returns additional context or reasoning.
-
-        Falls back to empty string if AI unavailable.
-        """
-        if self.use_openai:
-            return self._ai_analyze_context(violation, surrounding_code)
-        else:
-            return ""
-
-    def _ai_analyze_context(self, violation: Violation, surrounding_code: str) -> str:
-        """Analyze context using OpenAI API."""
-        try:
-            import openai
-
-            openai.api_key = self.openai_api_key
-
-            prompt = f"""
-Analyze the following code violation in context:
-
-Violation: {violation.rule_name}
-Message: {violation.message}
-
-Code Context:
-{surrounding_code}
-
-Is this violation a false positive? Could it be a legitimate use case?
-Provide your analysis in 2-3 sentences.
-"""
-
-            response = openai.ChatCompletion.create(
-                model=self.model,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "You are a security expert analyzing code violations.",
-                    },
-                    {"role": "user", "content": prompt},
-                ],
-                temperature=0.3,
-                max_tokens=200,
+        return fixes.get(
+            violation.rule_id, 
+            (
+                "# Review and refactor this code\n# Follow best practices for secure coding",
+                f"Review this violation: {violation.message}"
             )
-
-            return response.choices[0].message.content.strip()
-
-        except Exception:
-            return ""
+        )
 
     def generate_explanation(self, violation: Violation) -> str:
         """Generate a developer-friendly explanation for a violation."""
         explanations = {
-            "SEC-001": "Hardcoded credentials can be exposed in version control. Store secrets in environment variables or secret management systems.",
+            "SEC-001": "Hardcoded credentials can be exposed in version control. Store secrets in environment variables.",
             "SEC-002": "SQL injection allows attackers to manipulate database queries. Always use parameterized queries.",
             "SEC-003": "Unsafe deserialization can lead to remote code execution. Use safe alternatives like json.loads().",
             "SEC-004": "eval() and exec() execute arbitrary code. Avoid them in production.",
@@ -237,11 +196,11 @@ Provide your analysis in 2-3 sentences.
     def suggest_category_link(self, violation: Violation) -> Optional[str]:
         """Suggest documentation link for a violation category."""
         links = {
-            "SEC": "https://owasp.org/Top10/",
-            "CWE": "https://cwe.mitre.org/",
-            "PERF": "https://docs.python.org/3/library/profile.html",
-            "AI": "https://github.com/github/copilot-safety",
-            "IP": "https://opensource.org/licenses/",
+            "SEC": "[https://owasp.org/Top10/](https://owasp.org/Top10/)",
+            "CWE": "[https://cwe.mitre.org/](https://cwe.mitre.org/)",
+            "PERF": "[https://docs.python.org/3/library/profile.html](https://docs.python.org/3/library/profile.html)",
+            "AI": "[https://github.com/github/copilot-safety](https://github.com/github/copilot-safety)",
+            "IP": "[https://opensource.org/licenses/](https://opensource.org/licenses/)",
         }
 
         for prefix, link in links.items():
