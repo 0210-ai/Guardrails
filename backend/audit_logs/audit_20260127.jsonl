@@ -1,0 +1,253 @@
+{
+  "event_id": "b34357e7-979d-404d-a4ee-a06bafb595fd",
+  "timestamp": "2026-01-27T18:35:32.207469",
+  "repo_name": "0210-ai/Guardrails",
+  "pr_number": 6,
+  "commit_hash": "b22ddcbe0dcca5fe19282775bdd0944e9d3c94da",
+  "violation_count": 0,
+  "critical_count": 0,
+  "high_count": 0,
+  "enforcement_action": "warning",
+  "blocked": false,
+  "override_applied": false,
+  "override_reason": null,
+  "pr_url": null,
+  "scan_id": "d4d22630-1116-41b6-8eaa-57c3d803abde",
+  "violations_summary": []
+}
+{
+  "event_id": "51564522-17f5-4490-93fd-f36f5930ce33",
+  "timestamp": "2026-01-27T18:56:32.022928",
+  "repo_name": "0210-ai/Guardrails",
+  "pr_number": 7,
+  "commit_hash": "819a486fd5543dc04deb87f01fa4065d03f748f5",
+  "violation_count": 20,
+  "critical_count": 0,
+  "high_count": 16,
+  "enforcement_action": "warning",
+  "blocked": false,
+  "override_applied": false,
+  "override_reason": null,
+  "pr_url": null,
+  "scan_id": "3434fe86-dd1e-4b3c-b746-1655801d844c",
+  "violations_summary": [
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-009",
+      "severity": "medium",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-009",
+      "severity": "medium",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-009",
+      "severity": "medium",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-009",
+      "severity": "medium",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    }
+  ]
+}
+{
+  "event_id": "7e9e1c38-c0c2-40de-81b4-a6bec70d4208",
+  "timestamp": "2026-01-27T18:57:42.609411",
+  "repo_name": "0210-ai/Guardrails",
+  "pr_number": 7,
+  "commit_hash": "c9700094f1325ddf96197995b49ee2885f0d579d",
+  "violation_count": 20,
+  "critical_count": 0,
+  "high_count": 16,
+  "enforcement_action": "warning",
+  "blocked": false,
+  "override_applied": false,
+  "override_reason": null,
+  "pr_url": null,
+  "scan_id": "6223a5ba-d699-4139-a6bd-6c41e862ff6e",
+  "violations_summary": [
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-009",
+      "severity": "medium",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-009",
+      "severity": "medium",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-009",
+      "severity": "medium",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-009",
+      "severity": "medium",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    },
+    {
+      "rule_id": "SEC-008",
+      "severity": "high",
+      "category": "security"
+    }
+  ]
+}

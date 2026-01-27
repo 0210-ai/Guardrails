@@ -11,14 +11,14 @@ class AIReviewer:
     """AI-assisted code review engine using Google Gemini (Gen AI SDK v1)."""
 
     def __init__(self):
-        """Initialize Google Gen AI Client."""
+        """Initialize Google Gen AI Client"""
         self.api_key = os.getenv("GOOGLE_API_KEY")
         self.use_ai = self.api_key is not None
         
         if self.use_ai:
             # Initialize the Client (replaces genai.configure)
             self.client = genai.Client(api_key=self.api_key)
-            self.model_name = "gemini-1.5-flash"
+            self.model_name = "gemini-3-flash-preview"
 
     def suggest_fix(self, violation: Violation) -> Tuple[str, str]:
         """
