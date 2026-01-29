@@ -28,7 +28,7 @@ npm start
 
 Visit https://github.com/settings/apps/new and configure:
 
-1. **Webhook URL:** https://your-domain/webhook (or use Smee for local)
+1. **Webhook URL:** http://your-domain:3000/api/github/webhooks (or use Smee for local)
 2. **Permissions:** 
    - Contents: Read
    - Pull requests: Write

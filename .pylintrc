@@ -1,0 +1,21 @@
+[MESSAGES CONTROL]
+disable=missing-docstring
+
+[FORMAT]
+max-line-length=100
+
+[DESIGN]
+max-args=5
+max-locals=15
+max-returns=6
+max-branches=12
+max-statements=50
+
+[TYPECHECK]
+disable=import-error
+
+[REPORTS]
+output-format=colorized
+
+[LOGGING]
+logging-modules=logging
