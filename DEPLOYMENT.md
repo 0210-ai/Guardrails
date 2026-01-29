@@ -187,7 +187,6 @@ cat > .env << 'EOF'
 GOOGLE_API_KEY=your-gemini-api-key
 DEBUG=false
 HOST=0.0.0.0
-PORT=8000
 
 # GitHub App
 BACKEND_URL=http://localhost:8000
